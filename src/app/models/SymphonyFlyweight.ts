@@ -3,5 +3,8 @@ export interface SymphonyFlyweight {
     Name : string,
     ParentId? : string,
     Parent? : SymphonyFlyweight,
-    Children? : SymphonyFlyweight[]
+    Children? : SymphonyFlyweight[],
+    CreateTime : Date,
+    UpdateTime : Date,
+    Description? :string
 }

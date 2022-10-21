@@ -1,5 +1,13 @@
 <div>
-    <p>symphony-view works!</p>
-    {{ head?.Name }}
-    <button class="btn btn-primary" *ngIf="head?.ParentId" (click)="getParent()">Get Parent</button>
+    <button class="btn btn-primary d-block mb-3" *ngIf="head?.ParentId" (click)="getParent()">Get Parent</button>
+    <app-symphony-view-node  *ngIf="head" [node]="head"></app-symphony-view-node>
+    <div class="mt-2">
+        <mat-form-field class="example-form-field" appearance="fill" style="width:100%">
+            <mat-label>Symphony Link</mat-label>
+            <input matInput type="text" [(ngModel)]="newSymphonyUrl">
+            <button *ngIf="newSymphonyUrl" matSuffix mat-icon-button aria-label="Clear" (click)="setHead(newSymphonyUrl)">
+              <mat-icon>navigate_next</mat-icon>
+            </button>
+          </mat-form-field>
+    </div>
 </div>

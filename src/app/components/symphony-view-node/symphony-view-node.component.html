@@ -1,0 +1,18 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{node?.Name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>
+        <a target="_blank" href="https://app.composer.trade/symphony/{{node?.Id}}/details">
+            Open in Composer
+        </a>
+    </p>
+    <p>Created: {{node?.CreateTime | date : 'short'}}</p>
+    <p>Last Modified: {{node?.UpdateTime | date : 'short'}}</p>
+    <p>{{node?.Description}}</p>
+  </mat-expansion-panel>
+<div *ngIf="node?.Children?.length" class="mt-1">
+    <app-symphony-view-node *ngFor="let c of node?.Children" [node]="c"></app-symphony-view-node>
+</div>
