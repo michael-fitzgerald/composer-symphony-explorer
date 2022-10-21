@@ -1,0 +1,5 @@
+<div>
+    <p>symphony-view works!</p>
+    {{ head?.Name }}
+    <button class="btn btn-primary" *ngIf="head?.ParentId" (click)="getParent()">Get Parent</button>
+</div>
