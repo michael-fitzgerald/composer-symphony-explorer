@@ -50,7 +50,7 @@ export class SymphonyViewComponent implements OnInit {
             res.Children.push(this.head);
           }
           this.head = res;
-          console.log(this.head);
+          //console.log(this.head);
         }
       }
       finally{

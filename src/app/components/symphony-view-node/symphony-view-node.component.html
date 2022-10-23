@@ -1,17 +1,44 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{node?.Name}}
+        {{node.Name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <p>
-        <a target="_blank" href="https://app.composer.trade/symphony/{{node?.Id}}/details">
+        <a target="_blank" href="https://app.composer.trade/symphony/{{node.Id}}/details">
             Open in Composer
         </a>
     </p>
-    <p>Created: {{node?.CreateTime | date : 'short'}}</p>
-    <p>Last Modified: {{node?.UpdateTime | date : 'short'}}</p>
-    <p>{{node?.Description}}</p>
+    <p>Created: {{node.CreateTime | date : 'short'}}</p>
+    <p>Last Modified: {{node.UpdateTime | date : 'short'}}</p>
+    <p>{{node.Description}}</p>
+    <h3>Investable Assets</h3>
+    <table mat-table [dataSource]="node.Assets | asset : {invest : true}" class="w-100 mat-elevation-z8">
+      <ng-container matColumnDef="ticker">
+        <th mat-header-cell *matHeaderCellDef> Ticker </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Ticker}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Name}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <h3 class="mt-4">Comparitive Assets</h3>
+    <table mat-table [dataSource]="node.Assets | asset : {compare : true}" class="w-100 mat-elevation-z8">
+      <ng-container matColumnDef="ticker">
+        <th mat-header-cell *matHeaderCellDef> Ticker </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Ticker}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Name}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
   </mat-expansion-panel>
 <div *ngIf="node?.Children?.length" class="mt-1">
     <app-symphony-view-node *ngFor="let c of node?.Children" [node]="c"></app-symphony-view-node>

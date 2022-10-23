@@ -8,8 +8,8 @@ import { SymphonyFlyweight } from 'src/app/models/SymphonyFlyweight';
 })
 export class SymphonyViewNodeComponent implements OnInit {
 
-  @Input()
-  node? : SymphonyFlyweight
+  @Input() node! : SymphonyFlyweight;
+  displayedColumns: string[] = ['ticker', 'name'];
 
   constructor() { }
 

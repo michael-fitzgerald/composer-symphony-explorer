@@ -1,3 +1,5 @@
+import { AssetFlyweight } from "./AssetFlyweight";
+
 export interface SymphonyFlyweight {
     Id : string,
     Name : string,
@@ -6,5 +8,6 @@ export interface SymphonyFlyweight {
     Children? : SymphonyFlyweight[],
     CreateTime : Date,
     UpdateTime : Date,
-    Description? :string
+    Description? :string,
+    Assets : AssetFlyweight[]
 }

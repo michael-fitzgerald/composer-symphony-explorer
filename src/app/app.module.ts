@@ -14,16 +14,19 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input'
+import {MatTableModule} from '@angular/material/table'
 
 
 import { FormsModule } from '@angular/forms';
+import { AssetPipe } from './pipes/asset.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     SymphonyViewComponent,
     PageNotFoundComponent,
-    SymphonyViewNodeComponent
+    SymphonyViewNodeComponent,
+    AssetPipe
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
