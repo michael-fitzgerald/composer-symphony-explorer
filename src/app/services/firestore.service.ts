@@ -3,19 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { SymphonyFlyweight } from '../models/SymphonyFlyweight';
 import { parseEDNString } from 'edn-data'
 import { AssetFlyweight } from '../models/AssetFlyweight';
+import { ScraperService } from './scraper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  private http : HttpClient;
   private sleepRand = async () => new Promise((r) => setTimeout(r, 
     ((Math.random() * 5) + 5) * 1000   //between 5 and 10 seconds
     ));
 
-  constructor(private _http : HttpClient) {
-    this.http = _http;
+  constructor(private http : HttpClient, private scraper : ScraperService) {
+    
   }
 
   private extractSymphonyAssets(ednNode : any, arr : AssetFlyweight[]){
@@ -95,7 +95,7 @@ export class FirestoreService {
 
       that.http.get('https://firestore.googleapis.com/v1/projects/leverheads-278521/databases/(default)/documents/symphony/' + id)
       .subscribe({
-        next : function(succ : any) {
+        next : async function(succ : any) {
           let ret : SymphonyFlyweight = {
             Id : id,
             Name : succ.fields.name.stringValue,
@@ -108,9 +108,27 @@ export class FirestoreService {
 
           let edn = succ.fields.latest_version_edn.stringValue;
           let symphonyEdn = parseEDNString(edn, { mapAs: 'object', keywordAs: 'string' });
-          console.log(symphonyEdn);
+         
           that.extractSymphonyAssets(symphonyEdn, ret.Assets);
           ret.Assets.sort((a, b) => a.Ticker.localeCompare(b.Ticker));
+
+          for(let a of ret.Assets){
+            try{
+             
+              let detes = await that.scraper.getAssetDetails(a.Ticker);
+              if(detes){
+                  a.Details = detes;
+                  if(!a.Name?.length){
+                    a.Name = detes.Name;
+                  }
+              }
+              break;//only run once for testing, remove this.
+            }catch(e){
+              console.warn('Asset detail lookup failed for ' + a?.Ticker);
+            }
+          }
+
+          console.log(ret);
 
           resolve(ret);
         }, error : function(err){
