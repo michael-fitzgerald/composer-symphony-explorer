@@ -30,7 +30,7 @@ export class ScraperService {
         return;
       }
       //TODO remove dependency on this random free proxy I found..
-      that.http.get('https://thingproxy.freeboard.io/fetch/https://stockmarketmba.com/analyze.php?s=' + ticker,
+      that.http.get('https://proxy.cors.sh/https://stockmarketmba.com/analyze.php?s=' + ticker,
       {responseType: 'text'})
       .subscribe({
         next : function(succ : any) {
