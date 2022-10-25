@@ -10,7 +10,16 @@ import { SymphonyFlyweight } from 'src/app/models/SymphonyFlyweight';
 export class SymphonyViewNodeComponent implements OnInit {
 
   @Input() node! : SymphonyFlyweight;
-  displayedColumns: string[] = ['ticker', 'name'];
+  displayedColumns: string[] = [
+    'ticker', 
+    'name',
+    'leverage',
+    'category1',
+    'category2', 
+    'category3', 
+    // 'sector', 
+    // 'industry'
+  ];
 
   constructor() { }
 

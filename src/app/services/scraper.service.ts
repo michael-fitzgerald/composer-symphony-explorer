@@ -35,9 +35,13 @@ export class ScraperService {
       .subscribe({
         next : function(succ : any) {
 
-          let parsedDoc = $('<html></html').html(succ);
-
+          let testNodes = $.parseHTML(succ);
+          let parsedDoc = $(testNodes.filter(node => $(node).hasClass('container-fluid'))[0]);
+         
           let nameInfoContainer = parsedDoc.find('#tabs-1 > div.row.clearfix > div.col-md-8 > h3');
+
+          let assetLink = nameInfoContainer.find('a').remove().attr('href');
+          let assetName = nameInfoContainer.text().trim();
 
           let assetInfoHtml = parsedDoc.find('#tabs-1 > div.row.clearfix > div.col-md-4').html();
           let assetInfoContainer = $('<div>'+assetInfoHtml+'</div>');
@@ -49,19 +53,23 @@ export class ScraperService {
           let categories : string[] = [];
           let categoryRegex = /Category(?:1|2|3):(?:&nbsp;){2}<a.*?>(.*)<\/a>/g;
           while ((categoryMatches = categoryRegex.exec(assetInfoText)) !== null) {
-           
-            categories.push(categoryMatches?.[1]);
+              categories.push(categoryMatches?.[1]);
           }
 
-          debugger;
+          let levMatch = /Leverage factor:(?:&nbsp;){2}([-\d.]+)/g.exec(assetInfoText);
+
+          let sectorMatch = /sector:(?:&nbsp;){2}(.*?)<br>/gi.exec(assetInfoText);
+          let industryMatch = /industry:(?:&nbsp;){2}(.*?)<br>/gi.exec(assetInfoText);
+         
           let ret : AssetDetails = {
-              Name : '',
+              Name : assetName,
               Category1 : categories?.[0],
               Category2 : categories?.[1],
               Category3 : categories?.[2],
-              LeverageRatio : 1,
-              Industry : '',
-              Sector : ''
+              LeverageRatio : parseFloat(levMatch?.[1] || '1'),
+              Sector : sectorMatch?.[1],
+              Industry : industryMatch?.[1],
+              Link : assetLink
           };
           that.storedAssets[ticker] = ret;
           resolve(ret);

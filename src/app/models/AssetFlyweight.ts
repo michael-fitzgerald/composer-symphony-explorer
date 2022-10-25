@@ -14,5 +14,6 @@ export interface AssetDetails {
     Category3 : string,
     Sector? : string,
     Industry? : string,
-    LeverageRatio : number
+    LeverageRatio : number,
+    Link?:string
 }

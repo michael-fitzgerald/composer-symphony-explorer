@@ -4,6 +4,7 @@ import { SymphonyFlyweight } from '../models/SymphonyFlyweight';
 import { parseEDNString } from 'edn-data'
 import { AssetFlyweight } from '../models/AssetFlyweight';
 import { ScraperService } from './scraper.service';
+import { from, timer, zip } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -105,30 +106,29 @@ export class FirestoreService {
             Description : succ.fields.description.stringValue,
             Assets : []
           }
-
+        
           let edn = succ.fields.latest_version_edn.stringValue;
           let symphonyEdn = parseEDNString(edn, { mapAs: 'object', keywordAs: 'string' });
          
           that.extractSymphonyAssets(symphonyEdn, ret.Assets);
           ret.Assets.sort((a, b) => a.Ticker.localeCompare(b.Ticker));
 
-          for(let a of ret.Assets){
-            try{
-             
-              let detes = await that.scraper.getAssetDetails(a.Ticker);
-              if(detes){
-                  a.Details = detes;
-                  if(!a.Name?.length){
-                    a.Name = detes.Name;
-                  }
-              }
-              break;//only run once for testing, remove this.
-            }catch(e){
-              console.warn('Asset detail lookup failed for ' + a?.Ticker);
+          zip(
+            from(ret.Assets),
+            timer(0, 150),  //throttle these to every 150ms to avoid rate limit
+            (x, i) => x
+          ).subscribe({
+            next: function(a){
+              that.scraper.getAssetDetails(a.Ticker).then(function(detes){
+                a.Details = detes;
+                if(!a.Name?.length){
+                  a.Name = detes.Name;
+                }
+              }, function(){
+                console.warn('Asset detail lookup failed for ' + a?.Ticker);
+              });
             }
-          }
-
-          console.log(ret);
+          })
 
           resolve(ret);
         }, error : function(err){

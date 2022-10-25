@@ -16,11 +16,37 @@
     <table mat-table [dataSource]="node.Assets | asset : {invest : true}" class="w-100 mat-elevation-z8">
       <ng-container matColumnDef="ticker">
         <th mat-header-cell *matHeaderCellDef> Ticker </th>
-        <td mat-cell *matCellDef="let asset"> {{asset.Ticker}} </td>
+        <td mat-cell *matCellDef="let asset"> 
+          <a target="_blank" [href]="'https://stockmarketmba.com/analyze.php?s='+asset.Ticker">{{asset.Ticker}}</a>  
+        </td>
       </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let asset"> {{asset.Name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category1">
+        <th mat-header-cell *matHeaderCellDef> Category 1 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category1}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category2">
+        <th mat-header-cell *matHeaderCellDef> Category 2 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category2}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category3">
+        <th mat-header-cell *matHeaderCellDef> Category 3 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category3}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sector">
+        <th mat-header-cell *matHeaderCellDef> Sector </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Sector}} </td>
+      </ng-container>
+      <ng-container matColumnDef="industry">
+        <th mat-header-cell *matHeaderCellDef> Industry </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Industry}} </td>
+      </ng-container>
+      <ng-container matColumnDef="leverage">
+        <th mat-header-cell *matHeaderCellDef> Leverage </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.LeverageRatio}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'text-success' : this.isNewAsset(row, true)}"></tr>
@@ -28,11 +54,37 @@
     <table mat-table [dataSource]="this.getDeletedAssets(true)" class="w-100 mat-elevation-z8">
       <ng-container matColumnDef="ticker">
         <th mat-header-cell *matHeaderCellDef> Ticker </th>
-        <td mat-cell *matCellDef="let asset"> {{asset.Ticker}} </td>
+        <td mat-cell *matCellDef="let asset"> 
+          <a target="_blank" [href]="'https://stockmarketmba.com/analyze.php?s='+asset.Ticker">{{asset.Ticker}}</a>  
+        </td>
       </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let asset"> {{asset.Name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category1">
+        <th mat-header-cell *matHeaderCellDef> Category 1 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category1}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category2">
+        <th mat-header-cell *matHeaderCellDef> Category 2 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category2}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category3">
+        <th mat-header-cell *matHeaderCellDef> Category 3 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category3}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sector">
+        <th mat-header-cell *matHeaderCellDef> Sector </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Sector}} </td>
+      </ng-container>
+      <ng-container matColumnDef="industry">
+        <th mat-header-cell *matHeaderCellDef> Industry </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Industry}} </td>
+      </ng-container>
+      <ng-container matColumnDef="leverage">
+        <th mat-header-cell *matHeaderCellDef> Leverage </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.LeverageRatio}} </td>
       </ng-container>
       <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="text-danger"></tr>
@@ -42,11 +94,37 @@
     <table mat-table [dataSource]="node.Assets | asset : {compare : true}" class="w-100 mat-elevation-z8">
       <ng-container matColumnDef="ticker">
         <th mat-header-cell *matHeaderCellDef> Ticker </th>
-        <td mat-cell *matCellDef="let asset"> {{asset.Ticker}} </td>
+        <td mat-cell *matCellDef="let asset"> 
+          <a target="_blank" [href]="'https://stockmarketmba.com/analyze.php?s='+asset.Ticker">{{asset.Ticker}}</a>  
+        </td>
       </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let asset"> {{asset.Name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category1">
+        <th mat-header-cell *matHeaderCellDef> Category 1 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category1}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category2">
+        <th mat-header-cell *matHeaderCellDef> Category 2 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category2}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category3">
+        <th mat-header-cell *matHeaderCellDef> Category 3 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category3}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sector">
+        <th mat-header-cell *matHeaderCellDef> Sector </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Sector}} </td>
+      </ng-container>
+      <ng-container matColumnDef="industry">
+        <th mat-header-cell *matHeaderCellDef> Industry </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Industry}} </td>
+      </ng-container>
+      <ng-container matColumnDef="leverage">
+        <th mat-header-cell *matHeaderCellDef> Leverage </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.LeverageRatio}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'text-success' : this.isNewAsset(row, false)}"></tr>
@@ -54,11 +132,37 @@
     <table mat-table [dataSource]="this.getDeletedAssets(false)" class="w-100 mat-elevation-z8">
       <ng-container matColumnDef="ticker">
         <th mat-header-cell *matHeaderCellDef> Ticker </th>
-        <td mat-cell *matCellDef="let asset"> {{asset.Ticker}} </td>
+        <td mat-cell *matCellDef="let asset"> 
+          <a target="_blank" [href]="'https://stockmarketmba.com/analyze.php?s='+asset.Ticker">{{asset.Ticker}}</a>  
+        </td>
       </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let asset"> {{asset.Name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category1">
+        <th mat-header-cell *matHeaderCellDef> Category 1 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category1}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category2">
+        <th mat-header-cell *matHeaderCellDef> Category 2 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category2}} </td>
+      </ng-container>
+      <ng-container matColumnDef="category3">
+        <th mat-header-cell *matHeaderCellDef> Category 3 </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Category3}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sector">
+        <th mat-header-cell *matHeaderCellDef> Sector </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Sector}} </td>
+      </ng-container>
+      <ng-container matColumnDef="industry">
+        <th mat-header-cell *matHeaderCellDef> Industry </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.Industry}} </td>
+      </ng-container>
+      <ng-container matColumnDef="leverage">
+        <th mat-header-cell *matHeaderCellDef> Leverage </th>
+        <td mat-cell *matCellDef="let asset"> {{asset.Details?.LeverageRatio}} </td>
       </ng-container>
       <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="text-danger"></tr>
