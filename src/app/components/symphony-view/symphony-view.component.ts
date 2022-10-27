@@ -28,7 +28,7 @@ export class SymphonyViewComponent implements OnInit {
     this.head = undefined;
     let id = /\/symphony\/([^\/]+)/.exec(url)?.[1] || '';
     try {
-      this.head = await this.firestoreService.getSymphony(id);
+      this.head = await this.firestoreService.getSymphony(id, true);
      
     }catch(err){
       if(!err){
@@ -49,7 +49,7 @@ export class SymphonyViewComponent implements OnInit {
     if(this?.head?.ParentId && !this?.head?.Parent){
       this.timedOut = true;
       try{
-        let res = await this.firestoreService.getSymphony(this.head.ParentId);
+        let res = await this.firestoreService.getSymphony(this.head.ParentId, true); //automatically lookup assets here.
         if(res){
           if(this.head){
             this.head.Parent = res;

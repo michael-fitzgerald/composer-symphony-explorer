@@ -9,5 +9,6 @@ export interface SymphonyFlyweight {
     CreateTime : Date,
     UpdateTime : Date,
     Description? :string,
-    Assets : AssetFlyweight[]
+    Assets : AssetFlyweight[],
+    CacheOn? : Date
 }

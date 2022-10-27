@@ -79,7 +79,27 @@ export class FirestoreService {
     }
   }
 
-  async getSymphony(id:string){
+  lookupAssets(sym : SymphonyFlyweight){
+    let that = this;
+    zip(
+      from(sym.Assets),
+      timer(0, 200),  //throttle these to every 200ms to avoid rate limit
+      (x, i) => x
+    ).subscribe({
+      next: function(a){
+        that.scraper.getAssetDetails(a.Ticker).then(function(detes){
+          a.Details = detes;
+          if(!a.Name?.length){
+            a.Name = detes.Name;
+          }
+        }, function(){
+          console.warn('Asset detail lookup failed for ' + a?.Ticker);
+        });
+      }
+    })
+  }
+
+  async getSymphony(id:string, lookupAssets : boolean){
     let that = this;
     return new Promise<SymphonyFlyweight>(async function(resolve, reject){
 
@@ -109,22 +129,10 @@ export class FirestoreService {
           that.extractSymphonyAssets(symphonyEdn, ret.Assets);
           ret.Assets.sort((a, b) => a.Ticker.localeCompare(b.Ticker));
 
-          zip(
-            from(ret.Assets),
-            timer(0, 150),  //throttle these to every 150ms to avoid rate limit
-            (x, i) => x
-          ).subscribe({
-            next: function(a){
-              that.scraper.getAssetDetails(a.Ticker).then(function(detes){
-                a.Details = detes;
-                if(!a.Name?.length){
-                  a.Name = detes.Name;
-                }
-              }, function(){
-                console.warn('Asset detail lookup failed for ' + a?.Ticker);
-              });
-            }
-          })
+          if(lookupAssets){
+            that.lookupAssets(ret);
+          }
+          
 
           resolve(ret);
         }, error : function(err){
