@@ -14,6 +14,10 @@ export class SymphonyViewComponent implements OnInit {
   newSymphonyUrl? :string;
   timedOut : boolean = false;
 
+  private sleepRand = async () => new Promise((r) => setTimeout(r, 
+    ((Math.random() * 5) + 5) * 1000   //between 5 and 10 seconds
+    ));
+
   constructor(private _firestoreService : FirestoreService) {
     this.firestoreService = _firestoreService;
   }
@@ -25,11 +29,14 @@ export class SymphonyViewComponent implements OnInit {
     let id = /\/symphony\/([^\/]+)/.exec(url)?.[1] || '';
     try {
       this.head = await this.firestoreService.getSymphony(id);
-      this.timedOut = false;
+     
     }catch(err){
       if(!err){
         alert("Make sure you've pasted a valid url!")
       }
+      
+    } finally {
+      await this.sleepRand();
       this.timedOut = false;
     }
   }
@@ -54,6 +61,7 @@ export class SymphonyViewComponent implements OnInit {
         }
       }
       finally{
+        await this.sleepRand();
         this.timedOut = false;
       }
     }

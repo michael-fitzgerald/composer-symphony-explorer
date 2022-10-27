@@ -11,10 +11,6 @@ import { from, timer, zip } from 'rxjs';
 })
 export class FirestoreService {
 
-  private sleepRand = async () => new Promise((r) => setTimeout(r, 
-    ((Math.random() * 5) + 5) * 1000   //between 5 and 10 seconds
-    ));
-
   constructor(private http : HttpClient, private scraper : ScraperService) {
     
   }
@@ -92,7 +88,7 @@ export class FirestoreService {
         return;
       }
 
-      await that.sleepRand();
+    
 
       that.http.get('https://firestore.googleapis.com/v1/projects/leverheads-278521/databases/(default)/documents/symphony/' + id)
       .subscribe({
