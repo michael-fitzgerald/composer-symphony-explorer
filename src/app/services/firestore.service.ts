@@ -39,7 +39,7 @@ export class FirestoreService {
       if(!ednNode['lhs-fixed-value?']){
         let ticker = ednNode['lhs-val'];
       
-        var ext = arr.filter(x => x.Ticker == ticker)[0];
+        let ext = arr.filter(x => x.Ticker == ticker)[0];
         if(ext){
           ext.IsCompare = true;
         } else {
@@ -57,7 +57,7 @@ export class FirestoreService {
       if(!ednNode['rhs-fixed-value?']){
         let ticker = ednNode['rhs-val'];
       
-        var ext = arr.filter(x => x.Ticker == ticker)[0];
+        let ext = arr.filter(x => x.Ticker == ticker)[0];
         if(ext){
           ext.IsCompare = true;
         } else {
@@ -80,7 +80,7 @@ export class FirestoreService {
   }
 
   async getSymphony(id:string){
-    var that = this;
+    let that = this;
     return new Promise<SymphonyFlyweight>(async function(resolve, reject){
 
       if(!id){
