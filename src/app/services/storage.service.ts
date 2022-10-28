@@ -9,23 +9,34 @@ export class StorageService {
 
   constructor() { }
 
-  getSymphonies(){
-    let ret : SymphonyFlyweight[] = [];
+  async getSymphonies() : Promise<SymphonyFlyweight[]>{
+    return this.getObject<SymphonyFlyweight[]>('portfolio') || [];
+  }
+
+  async saveSymphonies(arr : SymphonyFlyweight[]){
+   this.setObject('portfolio', arr);
+  }
+
+  getObject<T>(key : string) : T | null { 
     try{
-      var str = localStorage.getItem('portfolio') || '';
-      if(!str) return ret;
-      ret = JSON.parse(str) as SymphonyFlyweight[];
+      if(!key) return null;
+      key = key.toLowerCase();
+      var str = localStorage.getItem(key) || '';
+      if(!str) return null;
+      return JSON.parse(str) as T;
     }
     catch(e){
       console.error('error encountered while loading portfolio from localstorage');
     }
-    return ret;
+    return null;
   }
 
-  saveSymphonies(arr : SymphonyFlyweight[]){
+  setObject<T>(key : string, val : T) {
     try{
-      let str = JSON.stringify(arr);
-      localStorage.setItem('portfolio', str);
+      if(!key) return;
+      key = key.toLowerCase();
+      let str = JSON.stringify(val);
+      localStorage.setItem(key, str);
     }
     catch(e){
       console.error('error encountered while loading from localstorage');

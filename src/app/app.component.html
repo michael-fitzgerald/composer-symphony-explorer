@@ -296,6 +296,10 @@
     font-size: .9em;
   }
 
+  .nav-link.active{
+    text-decoration: underline;
+  }
+
 </style>
 
 <!-- Toolbar -->
@@ -307,9 +311,9 @@
   /> -->
   <h2 style="margin-left:.5em;">Composer Symphony Explorer</h2>
     
-    <ul class="nav" style="margin-left:.5em;" routerLinkActive="active">
-      <li class="nav-item"><a class="nav-link" routerLink="view">Ancestry</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="mySymphonies">My Symphonies</a></li>
+    <ul class="nav" style="margin-left:.5em;" >
+      <li class="nav-item"><a class="nav-link"  routerLinkActive="active" routerLink="view">Ancestry</a></li>
+      <li class="nav-item"><a class="nav-link"  routerLinkActive="active" routerLink="mySymphonies">My Symphonies</a></li>
   </ul>
     <!-- <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular" title="Twitter">
       <svg id="twitter-logo" height="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">

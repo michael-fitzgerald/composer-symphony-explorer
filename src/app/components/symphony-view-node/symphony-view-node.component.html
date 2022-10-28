@@ -4,13 +4,14 @@
         {{node.Name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <p>
+    <p class="d-flex">
         <a target="_blank" href="https://app.composer.trade/symphony/{{node.Id}}/details">
             Open in Composer
         </a>
+        <button *ngIf="this.portfolioView" style="margin-left:auto;" class="btn btn-danger" (click)="this.deleteSymphony()">Stop Tracking</button>
     </p>
     <p>Created: {{node.CreateTime | date : 'short'}}</p>
-    <p>Last Modified: {{node.UpdateTime | date : 'short'}}</p>
+    <p *ngIf="portfolioView"> Cached On: {{node.CacheOn| date : 'short'}}</p>
     <p>{{node.Description}}</p>
     <h3>Investable Assets</h3>
     <table mat-table [dataSource]="node.Assets | asset : {invest : true}" class="w-100 mat-elevation-z8">
@@ -169,5 +170,5 @@
     </table>
   </mat-expansion-panel>
 <div *ngIf="node.Children?.length" class="mt-1">
-    <app-symphony-view-node *ngFor="let c of node?.Children" [node]="c"></app-symphony-view-node>
+    <app-symphony-view-node *ngFor="let c of node?.Children" [node]="c" [portfolioView]="this.portfolioView"></app-symphony-view-node>
 </div>

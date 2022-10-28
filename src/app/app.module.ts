@@ -20,6 +20,7 @@ import {MatTableModule} from '@angular/material/table'
 import { FormsModule } from '@angular/forms';
 import { AssetPipe } from './pipes/asset.pipe';
 import { MySymphoniesComponent } from './components/my-symphonies/my-symphonies.component';
+import { SymphonyByAssetPipe } from './pipes/symphony-by-asset.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MySymphoniesComponent } from './components/my-symphonies/my-symphonies.
     PageNotFoundComponent,
     SymphonyViewNodeComponent,
     AssetPipe,
-    MySymphoniesComponent
+    MySymphoniesComponent,
+    SymphonyByAssetPipe
   ],
   imports: [
     BrowserModule,

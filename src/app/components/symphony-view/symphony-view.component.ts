@@ -42,7 +42,7 @@ export class SymphonyViewComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.newSymphonyUrl = 'https://app.composer.trade/symphony/IedK6qi6hTO8ltCMhwH0/details'
+    //this.newSymphonyUrl = 'https://app.composer.trade/symphony/IedK6qi6hTO8ltCMhwH0/details'
   }
 
   async getParent(){

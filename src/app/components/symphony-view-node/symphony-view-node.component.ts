@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AssetFlyweight } from 'src/app/models/AssetFlyweight';
 import { SymphonyFlyweight } from 'src/app/models/SymphonyFlyweight';
 
@@ -10,7 +10,11 @@ import { SymphonyFlyweight } from 'src/app/models/SymphonyFlyweight';
 export class SymphonyViewNodeComponent implements OnInit {
 
   @Input() node! : SymphonyFlyweight;
-  displayedColumns: string[] = [
+  @Input() portfolioView : boolean = false;
+
+  @Output() deleted = new EventEmitter<string>();
+
+  fullDisplayedColumns: string[] = [
     'ticker', 
     'name',
     'leverage',
@@ -21,9 +25,16 @@ export class SymphonyViewNodeComponent implements OnInit {
     // 'industry'
   ];
 
+  liteDisplayedColumns: string[] = [
+    'ticker', 
+    'name'
+  ];
+  displayedColumns : string[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+      this.displayedColumns = this.portfolioView ? this.liteDisplayedColumns : this.fullDisplayedColumns;
   }
 
   isNewAsset (row : any, investable : boolean) : boolean {
@@ -50,5 +61,11 @@ export class SymphonyViewNodeComponent implements OnInit {
     }
     return ret;
   }
+
+  deleteSymphony (){
+    this.deleted.emit(this.node.Id);
+  }
+
+
 
 }

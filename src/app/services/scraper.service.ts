@@ -2,17 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as $ from 'jquery';
 import { AssetDetails } from '../models/AssetFlyweight';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScraperService {
 
-  constructor(private http : HttpClient) {
-    
+  private storedAssets: { [ticker: string]: AssetDetails } = {};
+
+  constructor(private http : HttpClient, private storageService : StorageService) {
+    this.storedAssets = storageService.getObject('assetLookup') || {};
   }
 
-  private storedAssets: { [ticker: string]: AssetDetails } = {};
 
   async getAssetDetails(ticker : string) : Promise<AssetDetails> {
     var that = this;
@@ -72,6 +74,7 @@ export class ScraperService {
               Link : assetLink
           };
           that.storedAssets[ticker] = ret;
+          that.storageService.setObject('assetLookup', that.storedAssets);
           resolve(ret);
         }, error : function(err){
             reject(err);
