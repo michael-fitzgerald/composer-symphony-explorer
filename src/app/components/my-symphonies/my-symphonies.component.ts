@@ -31,7 +31,7 @@ export class MySymphoniesComponent implements OnInit {
     if(!this.nodes.length) return new Date();
     return this.nodes.map(x => x.CacheOn).filter(x => !!x).sort((a, b) => {
         if(!(a && b)) return 0;
-        return a.getTime() - b.getTime();
+        return new Date(Date.parse(a.toString())).getTime() - new Date(Date.parse(b.toString())).getTime();
     })[0] || new Date();
   }
 
