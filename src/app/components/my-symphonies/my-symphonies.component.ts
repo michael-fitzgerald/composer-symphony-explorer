@@ -88,6 +88,14 @@ export class MySymphoniesComponent implements OnInit {
     })
   }
 
+  async clearAll(){
+    let result = window.confirm('Are you sure you want to clear all Symphonies?');
+    if(result){
+      this.nodes = [];
+      await this.saveSymphonies();
+    }
+  }
+
   async saveSymphonies(){
     await this.storageService.saveSymphonies(this.nodes);
   }

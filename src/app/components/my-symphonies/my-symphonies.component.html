@@ -2,15 +2,16 @@
    <div class="d-flex align-items-baseline" *ngIf="nodes.length">
     <button class="btn btn-primary d-block mb-3"  [disabled]="timedOut" (click)="refreshAll()">Refresh</button>
     <span style="margin-left:2em;">Earliest Sync: {{this.earliestSyncDate() | date: 'short'}}</span>
+    <button class="btn btn-danger ml-auto" (click)="clearAll()">Clear All</button>
   </div>
-  <mat-form-field class="example-form-field" appearance="fill" style="width:100%">
+  <mat-form-field *ngIf="nodes.length" class="example-form-field" appearance="fill" style="width:100%">
     <mat-label>Asset Search</mat-label>
     <input matInput type="text" [(ngModel)]="assetFilter">
   </mat-form-field>
     <app-symphony-view-node (deleted)="onSymphonyDelete(this.node.Id)"  *ngFor="let node of nodes | symphonyByAsset : this.assetFilter" [node]="node" [portfolioView]="true"></app-symphony-view-node>
     <div class="mt-2">
         <mat-form-field class="example-form-field" appearance="fill" style="width:100%">
-            <mat-label>Add a new Symphony by link</mat-label>
+            <mat-label>Track a new Symphony by link</mat-label>
             <input matInput type="text" [disabled]="timedOut" [(ngModel)]="newSymphonyUrl">
             <button *ngIf="newSymphonyUrl" [disabled]="timedOut" matSuffix mat-icon-button aria-label="Clear" (click)="addSymphony()">
               <mat-icon>add</mat-icon>
